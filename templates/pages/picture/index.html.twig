@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PictureController!
+{% endblock %}
+
+{% block body %}
+	<h1>Picture</h1>
+	{% for picture in pictures %}
+		<div>
+			<img src="{{ picture.url }}">
+		</div>
+	{% endfor %}
+{% endblock %}

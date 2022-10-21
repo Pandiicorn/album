@@ -30,6 +30,7 @@ class PictureController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pictureRepository->save($picture, true);
+            $this->addFlash('success', 'Your picture has been added !');
 
             return $this->redirectToRoute('app_picture_new', [], Response::HTTP_SEE_OTHER);
         }

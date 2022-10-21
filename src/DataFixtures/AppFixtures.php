@@ -5,9 +5,11 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+use App\Entity\User;
 use App\Entity\Picture;
 use Faker\Factory;
 use Faker\Generator;
+
 
 class AppFixtures extends Fixture
 {
@@ -23,18 +25,18 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
 
         // User
-        // $users = [];
-        // for ($i = 0; $i < 10; $i++) {
-        //     $user = new User();
-        //     $user->setFirstname($this->faker->firstname())
-        //         ->setLastname($this->faker->lastname())
-        //         ->setEmail($this->faker->email())
-        //         ->setRoles(['ROLE_USER'])
-        //         ->setPlainPassword('password');
+        $users = [];
+        for ($i = 0; $i < 10; $i++) {
+            $user = new User();
+            $user->setFirstname($this->faker->firstname())
+                ->setLastname($this->faker->lastname())
+                ->setEmail($this->faker->email())
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
 
-        //     $users[] = $user;
-        //     $manager->persist($user);
-        // }
+            $users[] = $user;
+            $manager->persist($user);
+        }
 
 
         for ($i = 1; $i <= 20; $i++) {

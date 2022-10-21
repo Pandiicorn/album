@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,8 +35,13 @@ class PictureType extends AbstractType
 
             ->add('description', TextType::class, [
                 'attr' => [
-                    'maxlength' => 255
+                    'maxlength' => 255,
                 ]
+            ])
+
+            ->add('submit', SubmitType::class, [
+                'attr' => [],
+                'label' => 'Add'
             ]);
     }
 

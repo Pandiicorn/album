@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container">
+
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<h1 class="">Add new picture</h1>
+
+			{% for message in app.flashes('success') %}
+				{{ message }}
+			{% endfor %}
+
+			{{ form_start(form) }}
+
+			<div>
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name)}}
+
+				{{ form_errors(form.name) }}
+
+			</div>
+
+			<div>
+				{{ form_label(form.url) }}
+				{{ form_widget(form.url)}}
+				{{ form_errors(form.url) }}
+
+			</div>
+
+			<div>
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description)}}
+				{{ form_errors(form.description) }}
+
+			</div>
+
+			<div>
+				{{ form_row(form.submit)}}
+			</div>
+
+			{{ form_end(form) }}
+		{% else %}
+			<h2>You need to be connected for add some picture</h2>
+			<a href="{{ path('security.login') }}">Connexion</a>
+		{% endif %}
+	</div>
+{% endblock %}

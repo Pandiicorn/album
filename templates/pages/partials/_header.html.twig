@@ -11,18 +11,18 @@
 				<a href=" {{ path('app_picture_new') }} ">Add picture</a>
 			</li>
 
-			{# {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
-			<li>
-				{# <a href=" {{ path('security.logout') }} ">Logout</a> #}
-			</li>
-			{# {% else %} #}
-			<li>
-				{# <a href=" {{ path('security.login') }} ">Login</a> #}
-			</li>
-			<li>
-				{# <a href=" {{ path('security.registration') }} ">Registration</a> #}
-			</li>
-			{# {% endif %} #}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<li>
+					<a href=" {{ path('security.logout') }} ">Logout</a>
+				</li>
+			{% else %}
+				<li>
+					<a href=" {{ path('security.login') }} ">Login</a>
+				</li>
+				<li>
+					<a href=" {{ path('security.registration') }} ">Registration</a>
+				</li>
+			{% endif %}
 		</ul>
 	</div>
 </nav>

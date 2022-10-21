@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
             $user = $form->getData();
 
             $this->addFlash(
-                'succes',
+                'success',
                 'Your account has been created'
             );
 

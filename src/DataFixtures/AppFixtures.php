@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
         }
 
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
             $picture = new Picture();
             $picture->setName($this->faker->name())
                 ->setUrl('https://picsum.photos/200/300?random.jpg')

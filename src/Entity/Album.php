@@ -2,52 +2,52 @@
 
 namespace App\Entity;
 
-use App\Repository\PictureRepository;
+use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: PictureRepository::class)]
-class Picture
+#[ORM\HasLifecycleCallbacks]
+#[ORM\Entity(repositoryClass: AlbumRepository::class)]
+class Album
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 55)]
     #[Assert\Length(min: 3, max: 55)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
-    #[Assert\Url(message: '{{ value }} is not valid')]
-    private ?string $url = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $creatAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'pictures')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\Column]
+    #[Assert\NotNull()]
+    private ?\DateTimeImmutable $updateAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Album::class, mappedBy: 'pictures')]
-    private Collection $albums;
+    #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'albums')]
+    private Collection $pictures;
 
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
+        $this->pictures = new ArrayCollection();
         $this->creatAt = new \DateTimeImmutable();
-        $this->albums = new ArrayCollection();
+        $this->updateAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    public function setUpdateAtValue()
+    {
+        $this->updateAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -63,18 +63,6 @@ class Picture
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(string $url): self
-    {
-        $this->url = $url;
 
         return $this;
     }
@@ -103,41 +91,38 @@ class Picture
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUpdateAt(): ?\DateTimeImmutable
     {
-        return $this->user;
+        return $this->updateAt;
     }
 
-    public function setUser(?User $user): self
+    public function setUpdateAt(\DateTimeImmutable $updateAt): self
     {
-        $this->user = $user;
+        $this->updateAt = $updateAt;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Album>
+     * @return Collection<int, Picture>
      */
-    public function getAlbums(): Collection
+    public function getPictures(): Collection
     {
-        return $this->albums;
+        return $this->pictures;
     }
 
-    public function addAlbum(Album $album): self
+    public function addPicture(Picture $picture): self
     {
-        if (!$this->albums->contains($album)) {
-            $this->albums->add($album);
-            $album->addPicture($this);
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
         }
 
         return $this;
     }
 
-    public function removeAlbum(Album $album): self
+    public function removePicture(Picture $picture): self
     {
-        if ($this->albums->removeElement($album)) {
-            $album->removePicture($this);
-        }
+        $this->pictures->removeElement($picture);
 
         return $this;
     }

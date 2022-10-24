@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Album
+{% endblock %}
+
+{% block body %}
+
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<h1>Album</h1>
+		{# {% for album in albums %}
+																						<div>
+																							<img src="{{ picture.url }}">            
+																						</div> #}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>creatAt</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				{% for album in albums %}
+					<tr>
+						<td>{{ album.id }}</td>
+						<td>{{ album.name }}</td>
+						<td>{{ album.description }}</td>
+						<td>{{ album.creatAt ? album.creatAt|date('d-m-Y H:i:s') : '' }}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="6">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{# {% endfor %} #}
+		{# <a href="{{ path('app_picture_new') }}">Add new</a> #}
+	{% else %}
+		<h2>You need to be connected</h2>
+		<a href="{{ path('security.login') }}">Login</a>
+	{% endif %}
+{% endblock %}

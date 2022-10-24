@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Form\PictureType;
 use App\Repository\PictureRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,23 +14,36 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/picture')]
 class PictureController extends AbstractController
 {
-    #[Route('/', name: 'app_picture_index', methods: ['GET'])]
+    #[Route('/', name: 'app_index', methods: ['GET'])]
     public function index(PictureRepository $repository): Response
     {
         return $this->render('pages/picture/index.html.twig', [
-            'pictures' => $repository->findAll()
+            'pictures' => $repository->findBy(['user' => $this->getUser()])
+        ]);
+    }
+
+    #[Route('/index', name: 'app_picture_index', methods: ['GET'])]
+    public function pic(PictureRepository $repository): Response
+    {
+        return $this->render('pages/picture/picture_index.html.twig', [
+            'pictures' => $repository->findBy(['user' => $this->getUser()])
         ]);
     }
 
     #[Route('/new', name: 'app_picture_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PictureRepository $pictureRepository): Response
+    public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $pictureRepository->save($picture, true);
+            $picture = $form->getdata();
+            $picture->setUser($this->getUser());
+
+            $manager->persist($picture);
+            $manager->flush();
+
             $this->addFlash('success', 'Your picture has been added !');
 
             return $this->redirectToRoute('app_picture_new', [], Response::HTTP_SEE_OTHER);
@@ -58,7 +72,7 @@ class PictureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $pictureRepository->save($picture, true);
 
-            return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('pages/picture/edit.html.twig', [
@@ -74,6 +88,6 @@ class PictureController extends AbstractController
             $pictureRepository->remove($picture, true);
         }
 
-        return $this->redirectToRoute('app_picture_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -55,11 +55,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $creatAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Picture::class, orphanRemoval: true)]
+    private Collection $pictures;
+
 
 
     public function __construct()
     {
         $this->creatAt = new DateTimeImmutable();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,5 +190,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPics(): Collection
     {
         return $this->pics;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+            $picture->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getUser() === $this) {
+                $picture->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

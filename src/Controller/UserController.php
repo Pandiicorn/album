@@ -57,17 +57,23 @@ class UserController extends AbstractController
     #[Route('user/update/password/{id}', name: 'user.update.password', methods: ['GET', 'POST'])]
     public function updatePassword(User $user, Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('security.login');
+        }
+
+        if ($this->getUser() !== $user) {
+            return $this->redirectToRoute('home.index');
+        }
+
         $form = $this->createForm(UserPasswordType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])) {
 
-                $user->setPassword(
-                    $hasher->hashPassword(
-                        $user,
-                        $form->getData()['newPassword']
-                    )
+                $user->setcreatAt(new \DateTimeImmutable());
+                $user->setplainPassword(
+                    $form->getData()['newPassword']
                 );
 
                 $manager->persist($user);

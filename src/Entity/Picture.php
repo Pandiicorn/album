@@ -6,6 +6,7 @@ use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
 class Picture
@@ -30,6 +31,10 @@ class Picture
     #[ORM\Column()]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $creatAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'pictures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
 
     /**
@@ -89,6 +94,18 @@ class Picture
     public function setCreatAt(\DateTimeImmutable $creatAt): self
     {
         $this->creatAt = $creatAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -39,13 +39,15 @@ class AppFixtures extends Fixture
         }
 
 
+        $pictures = [];
         for ($i = 1; $i <= 30; $i++) {
             $picture = new Picture();
             $picture->setName($this->faker->name())
                 ->setUrl('https://picsum.photos/200/300?random.jpg')
-                ->setDescription($this->faker->word());
-            // ->setUser($users[mt_rand(0, count($users) - 1)]);
+                ->setDescription($this->faker->word())
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
 
+            $pictures[] = $picture;
             $manager->persist($picture);
         }
 

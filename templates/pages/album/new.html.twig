@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div>
+		<h1 class="">Add new album</h1>
+
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+			{{ form_start(form) }}
+
+			<div>
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name)}}
+
+			</div>
+
+			<div>
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description)}}
+
+			</div>
+
+			<div>
+				{{ form_label(form.pictures) }}
+				{{ form_widget(form.pictures)}}
+			</div>
+
+			<div>
+				{{ form_row(form.submit)}}
+			</div>
+
+			{{ form_end(form) }}
+
+		{% else %}
+
+			<h2>You need to be connected for add some picture</h2>
+
+			<a href="{{ path('security.login') }}">Login</a>
+		{% endif %}
+
+	</div>
+
+{% endblock %}

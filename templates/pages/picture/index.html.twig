@@ -11,7 +11,7 @@
 				<img src="{{ picture.url }}">
 			</div>
 		{% endfor %}
-		<a href="{{ path('app_picture_new') }}">Add new</a>
+		<a href="{{ path('app_picture_new') }}">Add new picture</a>
 	{% else %}
 		<h2>You need to be connected</h2>
 		<a href="{{ path('security.login') }}">Login</a>

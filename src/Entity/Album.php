@@ -37,6 +37,10 @@ class Album
     #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'albums')]
     private Collection $pictures;
 
+    #[ORM\ManyToOne(inversedBy: 'album')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -123,6 +127,18 @@ class Album
     public function removePicture(Picture $picture): self
     {
         $this->pictures->removeElement($picture);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -19,7 +19,7 @@ class AlbumController extends AbstractController
     public function index(AlbumRepository $repository): Response
     {
         return $this->render('pages/album/index.html.twig', [
-            'albums' => $repository->findAll()
+            'albums' => $repository->findBy(['user' => $this->getUser()])
         ]);
     }
 
@@ -50,9 +50,10 @@ class AlbumController extends AbstractController
     public function show(Album $album): Response
     {
         return $this->render('pages/album/show.html.twig', [
-            'album' => $album,
+            'album' => $album
         ]);
     }
+
     #[Route('/{id}/edit', name: 'app_album_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Album $album, EntityManagerInterface $manager): Response
     {

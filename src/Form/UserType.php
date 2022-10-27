@@ -58,7 +58,9 @@ class UserType extends AbstractType
                 'label' => 'Enter your password to update your profil'
             ])
 
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Update profile'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

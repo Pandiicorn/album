@@ -12,10 +12,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class AlbumType extends AbstractType
 {
+    private ?Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -41,8 +49,11 @@ class AlbumType extends AbstractType
                 'class' => Picture::class,
                 'query_builder' => function (PictureRepository $repo) {
                     return $repo->createQueryBuilder('p')
-                        ->orderBy('p.name', 'ASC');
+                        ->where('p.user = :user')
+                        ->orderBy('p.name', 'ASC')
+                        ->setParameter('user', $this->security->getUser());
                 },
+
                 'choice_label' => function ($picture) {
                     $html = '<img src="' . $picture->getUrl() . '">';
                     return $html;

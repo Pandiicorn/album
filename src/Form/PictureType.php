@@ -41,7 +41,7 @@ class PictureType extends AbstractType
 
             ->add('submit', SubmitType::class, [
                 'attr' => [],
-                'label' => 'Add'
+                'label' => 'Add new picture'
             ]);
     }
 

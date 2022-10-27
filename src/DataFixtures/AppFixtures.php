@@ -58,7 +58,8 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             $album = new Album();
             $album->setName($this->faker->name())
-                ->setDescription($this->faker->text(30));
+                ->setDescription($this->faker->text(30))
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
 
             for ($j = 0; $j < mt_rand(2, 5); $j++) {
                 $album->addPicture($pictures[mt_rand(0, count($pictures) - 1)]);

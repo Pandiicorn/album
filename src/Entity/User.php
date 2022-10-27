@@ -58,12 +58,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Picture::class, orphanRemoval: true)]
     private Collection $pictures;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Album::class, orphanRemoval: true)]
+    private Collection $album;
+
 
 
     public function __construct()
     {
         $this->creatAt = new DateTimeImmutable();
         $this->pictures = new ArrayCollection();
+        $this->album = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,6 +220,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($picture->getUser() === $this) {
                 $picture->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Album>
+     */
+    public function getAlbum(): Collection
+    {
+        return $this->album;
+    }
+
+    public function addAlbum(Album $album): self
+    {
+        if (!$this->album->contains($album)) {
+            $this->album->add($album);
+            $album->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlbum(Album $album): self
+    {
+        if ($this->album->removeElement($album)) {
+            // set the owning side to null (unless already changed)
+            if ($album->getUser() === $this) {
+                $album->setUser(null);
             }
         }
 

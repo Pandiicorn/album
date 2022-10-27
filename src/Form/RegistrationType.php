@@ -67,7 +67,9 @@ class RegistrationType extends AbstractType
                 'invalid_message' => 'Passwords are not the same'
             ])
 
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Registration'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

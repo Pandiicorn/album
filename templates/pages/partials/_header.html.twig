@@ -1,34 +1,37 @@
-<nav>
-	<div>
-		<ul>
-			<li>
-				<a href=" {{ path('home.index') }} ">Home</a>
-			</li>
-			<li>
-				<a href=" {{ path('app_album') }}">Album</a>
-			</li>
-			<li>
-				<a href=" {{ path('app_index') }}">Picture</a>
-			</li>
-			<li>
-				<a href=" {{ path('app_picture_index') }}">Picture index</a>
-			</li>
-			<li>
-				<a href=" {{ path('app_picture_new') }} ">Add picture</a>
+<nav class="navbar">
+	<a href="{{ path('home.index')}}" class="link logo">Mon Album</a>
+	<div class="nav-link">
+		<ul class="nav-menu">
+			<li class="list-style nav-item">
+				<a class="link" href=" {{ path('app_album') }}">Album</a>
 			</li>
 
+			<li class="list-style nav-item">
+				<a class="link" href=" {{ path('app_index') }}">Picture</a>
+			</li>
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				<li>
-					<a href=" {{ path('security.logout') }} ">Logout</a>
+
+				<li class="list-style nav-item">
+					<a class="link" href=" {{ path('security.logout') }} ">Logout</a>
 				</li>
+
 			{% else %}
-				<li>
-					<a href=" {{ path('security.login') }} ">Login</a>
+
+				<li class="list-style nav-item">
+					<a class="link" href=" {{ path('security.login') }} ">Login</a>
 				</li>
-				<li>
-					<a href=" {{ path('security.registration') }} ">Registration</a>
+
+				<li class="list-style nav-item">
+					<a class="link" href=" {{ path('security.registration') }} ">Registration</a>
 				</li>
+
 			{% endif %}
 		</ul>
+
+		<div class="burger">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</div>
 	</div>
 </nav>

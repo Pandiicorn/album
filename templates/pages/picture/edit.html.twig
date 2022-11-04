@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Edit Picture</h1>
+	<h1 class="h1">Edit Picture</h1>
 
 	{{ form_start(form) }}
 
@@ -31,7 +31,7 @@
 
 	{{ form_end(form) }}
 
-	<a href="{{ path('app_picture_index') }}">back to list</a>
+	<a class="link" href="{{ path('app_picture_index') }}">back to list</a>
 
-	<a href="{{ path('app_picture_delete', {'id': picture.id}) }}">Delete</a>
+	<a class="link" href="{{ path('app_picture_delete', {'id': picture.id}) }}">Delete</a>
 {% endblock %}

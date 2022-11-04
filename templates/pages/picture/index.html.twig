@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PictureController!
+{% block title %}Picture
 {% endblock %}
 
 {% block body %}
 	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		<h1>Picture</h1>
-		<a href="{{ path('app_picture_new') }}">Add new picture</a>
+		<h1 class="h1">Picture</h1>
+		<a class="link" href="{{ path('app_picture_new') }}">Add new picture</a>
 		{% for picture in pictures %}
 			<div>
 				<img src="{{ picture.url }}">
 			</div>
 		{% endfor %}
 	{% else %}
-		<h2>You need to be connected</h2>
-		<a href="{{ path('security.login') }}">Login</a>
+		<h2 class="h2">You need to be connected</h2>
+		<a class="link" href="{{ path('security.login') }}">Login</a>
 	{% endif %}
 {% endblock %}

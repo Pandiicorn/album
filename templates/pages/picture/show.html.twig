@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Picture</h1>
+	<h1 class="h1">Picture</h1>
 
 	<table class="table">
 		<tbody>
@@ -36,9 +36,9 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_picture_index') }}">back to list</a>
+	<a class="link" href="{{ path('app_picture_index') }}">back to list</a>
 
-	<a href="{{ path('app_picture_edit', {'id': picture.id}) }}">edit</a>
+	<a class="link" href="{{ path('app_picture_edit', {'id': picture.id}) }}">edit</a>
 
-	<a href="{{ path('app_picture_delete', {'id': picture.id}) }}">Delete</a>
+	<a class="link" href="{{ path('app_picture_delete', {'id': picture.id}) }}">Delete</a>
 {% endblock %}

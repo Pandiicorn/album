@@ -75,8 +75,8 @@ class RegistrationType extends AbstractType
             ])
 
             ->add('captcha', Recaptcha3Type::class, [
-                'constraints' => new Recaptcha3(),
-                'action_name' => 'registration'
+                'constraints' => new Recaptcha3(['message' => 'There were problems with your captcha. Please try again or contact with support and provide following code(s): {{ errorCodes }}']),
+                'action_name' => 'registration',
             ]);
     }
 

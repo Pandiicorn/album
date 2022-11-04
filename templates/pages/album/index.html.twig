@@ -44,4 +44,4 @@
 			<td>no records found</td>
 		</tr>
 	{% endfor %}
-</tbody></table>{# {% endfor %} #}{# <a href="{{ path('app_picture_new') }}">Add new</a> #}{% else %}<h2>You need to be connected</h2><a href="{{ path('security.login') }}">Login</a>{% endif %}{% endblock %}
+</tbody></table>{# {% endfor %} #}{# <a href="{{ path('app_picture_new') }}">Add new</a> #}{% else %}<h2 class="h2">You need to be connected</h2><a class="link" href="{{ path('security.login') }}">Login</a>{% endif %}{% endblock %}

@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+
 class UserController extends AbstractController
 {
     #[Route('/user/update/{id}', name: 'user.update', methods: ['GET', 'POST'])]
